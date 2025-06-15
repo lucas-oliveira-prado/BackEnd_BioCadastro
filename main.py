@@ -15,6 +15,14 @@ app = FastAPI(
     version="1.0.0"
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # idealmente coloque o domínio da sua aplicação
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Dependency para obter sessão do banco de dados
 def get_db():
     """Cria uma sessão de banco de dados"""
@@ -90,13 +98,6 @@ def delete_weight_record(weight_id: int, db: Session = Depends(get_db)):
     """Deleta um registro de pesagem"""
     crud.deletar_pesagem(db, pesagem_id=weight_id)
     return {"message": "Pesagem deletada"}
-
-if __name__ == "__main__":
-    import uvicorn
-    import os
-    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
-    print(f"-> PORT: {int(os.getenv("PORT", 8000))}")
-    
 
 
 
