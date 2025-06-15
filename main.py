@@ -15,15 +15,6 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configurar CORS para permitir requisições do frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Em produção, especificar domínios específicos
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Dependency para obter sessão do banco de dados
 def get_db():
     """Cria uma sessão de banco de dados"""
